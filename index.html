@@ -7,7 +7,13 @@
 
       async function  inicializar() {
         this.filtros = await new FiltroPaises();  
-        this.filtros.addFiltro('Sudamerica', (e) => e.subregion ==='South America');
+        this.filtros.addFiltro('Sudamerica', (c) => c.subregion ==='South America');
+        this.filtros.addFiltro('Paises superpoblados', (c) => c.population > 100000000);
+        this.filtros.addFiltro('Paises insulares', (c) => !c.boders);
+        this.filtros.addFiltro('Países de habla guaraní', (c,lang) => speakLang(c,'grn'));
+        this.filtros.addFiltro('Países de habla portugués', (c,lang) => speakLang(c,'por'));
+        this.filtros.addFiltro('Países de habla chino', (c,lang) => speakLang(c, 'zho'));
+        this.filtros.addFiltro('Países con moneda euro', (c) => currencyEUR(c, 'EUR'));
         const selectElement = document.getElementById('paises-select');
         const filtrosDisponibles = this.filtros.getFiltros()
         filtrosDisponibles.forEach( f => selectElement.add(new Option(f.name, f.name)));
@@ -23,6 +29,20 @@
         const selectElement = document.getElementById('paises-select');
         this.filtros.setFormato(value)
         changeSelect(selectElement.options[selectElement.selectedIndex].value)
+      }
+
+      function speakLang(country, lang) {
+        return country.languages && country.languages[lang];
+      }
+
+      function currencyEUR(country) {
+        return country.currencies && country.currencies.EUR;
+      }
+
+      function countCountrysWithCurrency(countries, currency) {
+        return countries.reduce((count, country) => {
+          return country.currencies && country.currencies[currency] ? count + 1 : count;
+        }, 0);
       }
 
       window.onload =  inicializar;
