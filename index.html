@@ -39,12 +39,6 @@
         return country.currencies && country.currencies.EUR;
       }
 
-      function countCountrysWithCurrency(countries, currency) {
-        return countries.reduce((count, country) => {
-          return country.currencies && country.currencies[currency] ? count + 1 : count;
-        }, 0);
-      }
-
       window.onload =  inicializar;
     </script>
   </head>
