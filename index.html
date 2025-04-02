@@ -13,6 +13,7 @@
         this.filtros.addFiltro('Países de habla guaraní', (c,lang) => speakLang(c,'grn'));
         this.filtros.addFiltro('Países de habla portugués', (c,lang) => speakLang(c,'por'));
         this.filtros.addFiltro('Países de habla chino', (c,lang) => speakLang(c, 'zho'));
+        this.filtros.addFiltro('Países de habla inglés', (c) => hablaIngles(c)); // Otra forma de hacerlo es: (c) => speakLang(c, 'eng')
         this.filtros.addFiltro('Países con moneda euro', (c) => currencyEUR(c, 'EUR'));
         const selectElement = document.getElementById('paises-select');
         const filtrosDisponibles = this.filtros.getFiltros()
@@ -33,6 +34,10 @@
 
       function speakLang(country, lang) {
         return country.languages && country.languages[lang];
+      }
+
+      function hablaIngles(country) { //Alternativa a: speakLang(country, 'eng')
+        return country.languages && country.languages.eng;
       }
 
       function currencyEUR(country) {
